@@ -1,5 +1,5 @@
 server:
   dubbo:
     port:
-      7888
-  port: 8999
+      28150
+  port: 80
