@@ -1,0 +1,60 @@
+server:
+  dubbo:
+    port:
+      7888
+  port: 8999
+spring:
+  sleuth:
+    annotation:
+      enabled: true
+    trace-id128: true
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://47.98.100.103:9411
+    enabled: true
+    service:
+      name: fota-account
+  datasource:
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://172.16.50.188:3306/fota?allowMultiQueries=true&characterEncoding=utf8&useUnicode=true
+      username: fota
+      password: fota#daily
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /admin/druid/*
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  redis:
+    cluster:
+      nodes: 172.16.50.183:6379,172.16.50.183:6380,172.16.50.184:6379,172.16.50.184:6380,172.16.50.185:6379,172.16.50.185:6380
+    lettuce:
+      pool:
+        max-active: 250
+        max-wait: 500ms
+        max-idle: 50
+        min-idle: 10
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+management:
+  server:
+    port: 10004
