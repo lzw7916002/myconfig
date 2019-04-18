@@ -9,3 +9,5 @@ spring:
       allow-override: true # 远端配置是否允许覆盖，默认是 true
       override-none: true # 远端配置是否为最低优先级，不覆盖任何已存在配置，默认是 false
       override-system-properties: false # 远端配置是否可以覆盖系统配置，默认是 true (也就是java -Dxxx传入的参数)
+zk:
+  servers: 127.0.0.1:2181
