@@ -1,72 +1,39 @@
 server:
-    thrift:
-        port: 7889
-    tomcat:
-        uri-encoding: UTF-8
-        max-threads: 1000
-        min-spare-threads: 30
-    port: 9535
-
+  port: 8081
 spring:
-    rocketmq:
-        namesrv_addr: 172.16.50.194:9876
-        consumer-group: fota-activity-daily
-        instanceName: ${MQ_INSTANCE_NAME:activity}
-    redis:
-        cluster:
-            nodes: 172.16.50.183:6379,172.16.50.183:6380,172.16.50.184:6379,172.16.50.184:6380,172.16.50.185:6379,172.16.50.185:6380
-        password:
-    datasource:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.jdbc.Driver
-        druid:
-            fota:
-                jdbc-url: jdbc:mysql://172.16.50.188:3306/fota?autoReconnect=true&useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
-                username: fota
-                password: fota#daily
-
-        initial-size: 10
-        max-active: 100
-        min-idle: 10
-        max-wait: 60000
-        pool-prepared-statements: true
-        max-pool-prepared-statement-per-connection-size: 20
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        validation-query: SELECT 1 FROM DUAL
-        test-while-idle: true
-        test-on-borrow: false
-        test-on-return: false
-        stat-view-servlet:
-            enabled: true
-            url-pattern: /admin/druid/*
-        filter:
-            stat:
-                log-slow-sql: true
-                slow-sql-millis: 1000
-                merge-sql: true
-            wall:
-                config:
-                    multi-statement-allow: true
-    zipkin:
-        base-url: http://47.98.100.103:9411
-        service:
-            name: fota-activity
-
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seata?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
+    druid:
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
         enabled: true
-    sleuth:
-        sampler:
-            probability: 1
-        zuul:
-            enabled: false
-
+        url-pattern: /druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
 mybatis:
-    mapperLocations: classpath:mapper/*.xml
-    configuration:
-        mapUnderscoreToCamelCase: true
-management:
-  server:
-    port: 10018
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.fescar.model
 
-zookeeper:
-  serverList: 172.16.50.183:2181,172.16.50.184:2181,172.16.50.185:2181
